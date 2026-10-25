@@ -1,6 +1,4 @@
-this is test file to test the pre commit hook 
-if this test file contains the text "secret" the using pre-commit-hook it will block this commit
+#there is secret in this file to check the pre commit hooks working
+#if word secret is detected here it will not commit the file
 
-secret="12keoer2"
-
-
+secret="1234wadq"
