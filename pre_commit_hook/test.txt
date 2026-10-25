@@ -1,0 +1,6 @@
+this is test file to test the pre commit hook 
+if this test file contains the text "secret" the using pre-commit-hook it will block this commit
+
+secret="12keoer2"
+
+
