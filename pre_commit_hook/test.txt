@@ -1,6 +1,6 @@
 #there is secret in this file to check the pre commit hooks working
 #if word secret is detected here it will not commit the file
 
-secret="1sdf234wadq"
+secret="1sdfe1sdf234wadq"
 
-
+password= "1231hoedqoed"
