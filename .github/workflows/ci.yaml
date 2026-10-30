@@ -1,0 +1,24 @@
+name: gitleaks secret scan
+on:
+ push:
+  branches: ["*"]
+ pull_request:
+ workflow_dispatch:
+
+
+jobs:
+
+  scan:
+    name: scan the repo
+    runs-on: ubuntu:latest
+    steps:
+
+      - name: checkout the repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: gitleaks scan the repo
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{secret.GITHUB_TOKEN}}
