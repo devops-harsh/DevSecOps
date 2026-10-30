@@ -4,4 +4,4 @@
 secret="1sdfe1sdf234wadq"
 db_password= "1231hoedqoed"
 
-secret_key="12dsfq3e"
+secret_key="12dsfq3eqeqe"
