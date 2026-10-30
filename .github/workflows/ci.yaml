@@ -10,7 +10,7 @@ jobs:
 
   scan:
     name: scan the repo
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
 
       - name: checkout the repo
