@@ -21,4 +21,4 @@ jobs:
       - name: gitleaks scan the repo
         uses: gitleaks/gitleaks-action@v3
         env:
-          GITHUB_TOKEN: ${{secret.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
