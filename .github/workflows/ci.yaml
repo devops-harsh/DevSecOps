@@ -28,11 +28,18 @@ jobs:
   #       env:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  first:
+   name: tets
+   runs-on: ubuntu-latest
+
+   steps:
+    - name : echo
+      run: echo "tets"
+
+
   iac:
     name: Fetch AWS credentials for Terraform
     runs-on: ubuntu-latest
-    needs: scan
-
     defaults:
       run:
         working-directory: ./terraform_security/vault/
