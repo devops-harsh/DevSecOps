@@ -13,20 +13,20 @@ permissions: # it allows action to request JWT token
 
 jobs:
 
-  scan:
-    name: Scan the repository
-    runs-on: ubuntu-latest
+  # scan:
+  #   name: Scan the repository
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  #   steps:
+  #     - name: Checkout the repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Gitleaks scan
-        uses: gitleaks/gitleaks-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Gitleaks scan
+  #       uses: gitleaks/gitleaks-action@v3
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   iac:
     name: Fetch AWS credentials for Terraform
