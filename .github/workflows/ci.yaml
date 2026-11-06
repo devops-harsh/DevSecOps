@@ -1,24 +1,65 @@
-name: gitleaks secret scan
-on:
- push:
-  branches: ["*"]
- pull_request:
- workflow_dispatch:
 
+name: Gitleaks Secret Scan
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions: # it allows action to request JWT token
+  id-token: write
+  contents: read
 
 jobs:
 
   scan:
-    name: scan the repo
+    name: Scan the repository
     runs-on: ubuntu-latest
-    steps:
 
-      - name: checkout the repo
+    steps:
+      - name: Checkout the repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: gitleaks scan the repo
+      - name: Gitleaks scan
         uses: gitleaks/gitleaks-action@v3
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  iac:
+    name: Fetch AWS credentials for Terraform
+    runs-on: ubuntu-latest
+    needs: scan
+
+    defaults:
+      run:
+        working-directory: ./terraform_security/vault/
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Fetch AWS credentials from Vault
+        uses: hashicorp/vault-action@v3
+        with:
+          url: http://154.61.75.245:8200
+          method: jwt
+          role: gh-actions-role
+          jwtGithubAudience: https://github.com/devops-harsh
+          secrets: |
+            aws/creds/terraform-role access_key | AWS_ACCESS_KEY_ID ;
+            aws/creds/terraform-role secret_key | AWS_SECRET_ACCESS_KEY
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
